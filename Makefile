@@ -7,10 +7,10 @@ activate: $(VENV)/bin/activate
 all: train test
 
 train: 
-	python src/train.py
+	python3 src/train.py
 
 test: 
-	python src/test.py
+	python3 src/test.py
 
 clean:
 	# Indent with a tab

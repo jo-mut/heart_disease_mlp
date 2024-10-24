@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 
 def load_data(filepath):
@@ -8,11 +8,8 @@ def load_data(filepath):
     return data
 
 def preprocess_data(data):
-    # using Label Encoder, transform all the categerical columns to have numerical values
     categorical_columns = ['Sex', 'ST_Slope', 'ChestPainType', 'RestingECG', 'ExerciseAngina']
-    encoder = LabelEncoder()
-    for column in categorical_columns:
-        data[column] = encoder.fit_transform(data[column])
+    data = pd.get_dummies(data, categorical_columns, dtype='int')
     return data
 
 def split_data(data):
@@ -23,7 +20,7 @@ def split_data(data):
 
     X = data.loc[:, features]
     y = data.loc[:, 'HeartDisease']
-    return train_test_split(X, y, train_size=.75)
+    return train_test_split(X, y, train_size=.75, random_state=123, shuffle=True)
 
 def scaled_data(data):
     scaler = StandardScaler()
